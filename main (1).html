@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atarah Quiz — Live Scoreboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="crest-space"></div>
+  <header>
+    <p class="eyebrow">Royal Quiz Championship</p>
+    <h1 class="subtitle">Live Scoreboard</h1>
+  </header>
+
+  <!-- GATE: choose host or join -->
+  <div id="gateChoice" class="gate-wrap">
+    <div class="gate-panel">
+      <h2 style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:.15em;color:var(--gold-bright);text-transform:uppercase;margin:0;">Begin</h2>
+      <p class="gate-desc">Host a new scoreboard room, or join one already running on another device.</p>
+      <div class="gate-choice-row">
+        <button class="gate-btn host" id="showHostBtn">Host a Room</button>
+        <button class="gate-btn join" id="showJoinBtn">Join a Room</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GATE: hosting confirmation -->
+  <div id="gateHost" class="gate-wrap hidden">
+    <div class="gate-panel">
+      <h2 style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:.15em;color:var(--gold-bright);text-transform:uppercase;margin:0;">Room Created</h2>
+      <p class="gate-desc">Share this code with the other scorekeepers. They'll enter it under "Join a Room."</p>
+      <div class="room-code-display" id="hostCodeDisplay">------</div>
+      <button class="ghost" id="copyCodeBtn" style="width:100%;">Copy Code</button>
+      <button class="gate-btn host" id="enterHostedRoomBtn" style="width:100%;margin-top:10px;">Enter Scoreboard</button>
+      <button class="ghost gate-back" id="backFromHostBtn">← Back</button>
+    </div>
+  </div>
+
+  <!-- GATE: join -->
+  <div id="gateJoin" class="gate-wrap hidden">
+    <div class="gate-panel">
+      <h2 style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:.15em;color:var(--gold-bright);text-transform:uppercase;margin:0;">Join a Room</h2>
+      <p class="gate-desc">Enter the room code shared by your host.</p>
+      <input type="text" class="join-input" id="joinCodeInput" maxlength="6" placeholder="XXXXXX" autocomplete="off" autocapitalize="characters"/>
+      <div class="gate-error" id="joinError"></div>
+      <button class="gate-btn host" id="submitJoinBtn" style="width:100%;">Join Room</button>
+      <button class="ghost gate-back" id="backFromJoinBtn">← Back</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="appMain" class="hidden">
+    <div style="text-align:center;margin-bottom:18px;">
+      <div class="room-badge">Room <strong id="currentRoomLabel" style="letter-spacing:.15em;">------</strong> &nbsp;·&nbsp; <span class="dot"></span> <span id="syncLabel">Synced across devices</span></div>
+      <div><button class="ghost small" id="leaveRoomBtn" style="margin-top:10px;">Leave Room</button></div>
+    </div>
+
+    <div class="panel">
+      <h2>Leaderboard</h2>
+      <div class="leaderboard" id="leaderboard"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Score Entry</h2>
+      <div class="controls">
+        <button id="addTeamBtn">+ Add Team</button>
+        <button id="addRoundBtn" class="ghost">+ Add Round</button>
+        <button id="removeRoundBtn" class="ghost">− Remove Round</button>
+        <button id="resetBtn" class="danger">Reset All Scores</button>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr id="headRow"></tr></thead>
+          <tbody id="bodyRows"></tbody>
+        </table>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+
+    <footer>Edits save automatically and appear on every device in this room.</footer>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<!-- Your Firebase project credentials -->
+<script src="firebase-config.js"></script>
+
+<!-- App logic -->
+<script src="main.js"></script>
+</body>
+</html>
